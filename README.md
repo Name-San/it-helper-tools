@@ -17,4 +17,4 @@ _Simple tools to assist your daily tasks. Please read the instruction below how 
 > [!NOTE]
 > - The IRM command in PowerShell downloads a script from a specified URL, and the IEX command executes it.
 > - Always double-check the URL before executing the command and verify the source if manually downloading files.
-> - You check the code by accessing the links.
+> - You can check the code by accessing the links.
