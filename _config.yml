@@ -1,6 +1,8 @@
 theme: jekyll-theme-minimal
 title: IT Helper Tools
-description: {
+description: 
 Simple tools to help you. Command format irm <link> | iex
+
 Chrome Policies - irm https://name-san.github.io/it-helper-tools/windows/add_chrome_policies.txt | iex
-}
+
+
