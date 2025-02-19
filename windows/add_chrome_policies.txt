@@ -46,8 +46,7 @@ if ($command) {
     }
 }
 
-do {
-    cls         
+do {         
     echo "              __________________________________________________________________________________________`n
                                                 Chrome Policies Activation                              `n
                         [1] Disable Manually                                                            `n
