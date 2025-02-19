@@ -32,51 +32,57 @@ function Add-Policies {
 }
 
 # Main
-if ($command) {
-    echo "entered"
-    switch($command) {
-        'disable' {
-            Add-Policies -incognito 1 -guest 0 -sync 1 -history 0
-            exit 0
-        }
-        'enable' {
-            Add-Policies -incognito 0 -guest 1 -sync 0 -history 1
-            exit 0
-        }
-        default {
-            Write-Output "Invalid argument. Use /disable or /enable."
+function Main {
+    param([string]$command)
+    if ($command) {
+        cls
+        switch($command) {
+            '/disable' {
+               Add-Policies -incognito 1 -guest 0 -sync 1 -history 0
+               cls
+            }
+            '/enable' {
+                Add-Policies -incognito 0 -guest 1 -sync 0 -history 1
+                cls
+            }
+            default {
+                Write-Output "Invalid argument. Use /disable or /enable."
+            }
         }
     }
+    
+    do {
+        cls
+        echo "              __________________________________________________________________________________________`n
+                                                    Chrome Policies Activation                              `n
+                            [1] Disable Manually                                                            `n
+                            [2] Disable All                                                                 `n
+                            [3] Allow All                                                                   `n
+                            [q] Exit                                                                        `n
+                  __________________________________________________________________________________________`n"
+    
+        $input = read-host "                Enter selection"
+        switch($input) {
+            '1' {
+                cls
+                echo "              __________________________________________________________________________________________`n
+                                                    0 = True | 1 = False                                    `n"
+                $incognito = read-host "                Incognito Mode Availability"
+                $guest = read-host "                Browser Guest Mode Disable"
+                $sync = read-host "                Sync Enable"
+                $history = read-host "                Disable Deleting Browser History"
+                echo "Please wait..."
+                Add-Policies -incognito $incognito -guest $guest -sync $sync -history $history
+            } '2' {
+                Add-Policies -incognito 1 -guest 0 -sync 1 -history 0
+            } '3' {
+                Add-Policies -incognito 0 -guest 1 -sync 0 -history 1
+            }
+            'q' {
+                exit
+            }
+        }
+    } until ($input -eq 0)
 }
 
-do {         
-    echo "              __________________________________________________________________________________________`n
-                                                Chrome Policies Activation                              `n
-                        [1] Disable Manually                                                            `n
-                        [2] Disable All                                                                 `n
-                        [3] Allow All                                                                   `n
-                        [q] Exit                                                                        `n
-              __________________________________________________________________________________________`n"
-
-    $input = read-host "                Enter selection"
-    switch($input) {
-        '1' {
-            cls
-            echo "              __________________________________________________________________________________________`n
-                                                0 = True | 1 = False                                    `n"
-            $incognito = read-host "                Incognito Mode Availability"
-            $guest = read-host "                Browser Guest Mode Disable"
-            $sync = read-host "                Sync Enable"
-            $history = read-host "                Disable Deleting Browser History"
-            echo "Please wait..."
-            Add-Policies -incognito $incognito -guest $guest -sync $sync -history $history
-        } '2' {
-            Add-Policies -incognito 1 -guest 0 -sync 1 -history 0
-        } '3' {
-            Add-Policies -incognito 0 -guest 1 -sync 0 -history 1
-        }
-        'q' {
-            exit
-        }
-    }
-} until ($input -eq 0)
+Main $command
