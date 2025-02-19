@@ -6,7 +6,7 @@ function Add-Policies {
         [int]$sync,
         [int]$history
     )
-    $Path = "HKLM:\SOFTWARE\Policies\Google\Chrome"
+    $Path = "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome"
     $Entries = @{
         "IncognitoModeAvailability"=$incognito
         "BrowserGuestModeEnabled"=$guest
