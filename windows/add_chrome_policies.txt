@@ -1,31 +1,3 @@
-function Add-Policies {
-    param(
-        [int]$incognito,
-        [int]$guest,
-        [int]$sync,
-        [int]$history
-    )
-    $Path = "HKLM:\SOFTWARE\Policies\Google\Chrome"
-
-    if (-not (Test-Path $Path)) {
-        New-Item -Path "HKLM:\SOFTWARE\Policies\Google" -Name "Chrome" -Force | Out-Null
-    }
-
-    $Entries = @{
-        "IncognitoModeAvailability"=$incognito
-        "BrowserGuestModeEnabled"=$guest
-        "SyncDisabled"=$sync
-        "AllowDeletingBrowserHistory"=$history
-    }
-
-    foreach ($Entry in $Entries.GetEnumerator()) {
-        New-ItemProperty -Path $Path -Name $Entry.Key -Value $Entry.Value -PropertyType DWORD -Force 
-    }
-
-    echo "Successfully Applied."
-    sleep 3
-}
-
 param(
     [string]$command
 )
@@ -77,3 +49,31 @@ do {
         }
     }
 } until ($input -eq 0)
+
+function Add-Policies {
+    param(
+        [int]$incognito,
+        [int]$guest,
+        [int]$sync,
+        [int]$history
+    )
+    $Path = "HKLM:\SOFTWARE\Policies\Google\Chrome"
+
+    if (-not (Test-Path $Path)) {
+        New-Item -Path "HKLM:\SOFTWARE\Policies\Google" -Name "Chrome" -Force | Out-Null
+    }
+
+    $Entries = @{
+        "IncognitoModeAvailability"=$incognito
+        "BrowserGuestModeEnabled"=$guest
+        "SyncDisabled"=$sync
+        "AllowDeletingBrowserHistory"=$history
+    }
+
+    foreach ($Entry in $Entries.GetEnumerator()) {
+        New-ItemProperty -Path $Path -Name $Entry.Key -Value $Entry.Value -PropertyType DWORD -Force 
+    }
+
+    echo "Successfully Applied."
+    sleep 3
+}
