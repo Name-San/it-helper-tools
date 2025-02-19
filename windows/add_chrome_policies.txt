@@ -1,4 +1,3 @@
-
 function Add-Policies {
     param(
         [int]$incognito,
@@ -27,6 +26,10 @@ function Add-Policies {
     sleep 3
 }
 
+param(
+    [int]$input
+)
+
 do {
     cls         
     echo "              __________________________________________________________________________________________`n
@@ -37,7 +40,9 @@ do {
                         [q] Exit                                                                        `n
               __________________________________________________________________________________________`n"
 
+    if (-not($input)) {
     $input = read-host "                Enter selection"
+    }
     switch($input) {
         '1' {
             cls
