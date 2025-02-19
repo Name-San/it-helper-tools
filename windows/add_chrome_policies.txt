@@ -39,6 +39,9 @@ if ($command) {
             Add-Policies -incognito 0 -guest 1 -sync 0 -history 1
             exit 0
         }
+        default {
+            Write-Output "Invalid argument. Use /disable or /enable."
+        }
     }
 }
 
