@@ -31,26 +31,7 @@ function Add-Policies {
     sleep 3
 }
 
-# Main
-function Main {
-    param([string]$command)
-    if ($command) {
-        cls
-        switch($command) {
-            '/disable' {
-               Add-Policies -incognito 1 -guest 0 -sync 1 -history 0
-               cls
-            }
-            '/enable' {
-                Add-Policies -incognito 0 -guest 1 -sync 0 -history 1
-                cls
-            }
-            default {
-                Write-Output "Invalid argument. Use /disable or /enable."
-            }
-        }
-    }
-    
+function Interactive-Menu {
     do {
         cls
         echo "              __________________________________________________________________________________________`n
@@ -60,7 +41,7 @@ function Main {
                             [3] Allow All                                                                   `n
                             [q] Exit                                                                        `n
                   __________________________________________________________________________________________`n"
-    
+
         $input = read-host "                Enter selection"
         switch($input) {
             '1' {
@@ -83,6 +64,29 @@ function Main {
             }
         }
     } until ($input -eq 0)
+}
+
+# Main
+function Main {
+    param([string]$command)
+    if ($command) {
+        cls
+        switch($command) {
+            '/disable' {
+               Add-Policies -incognito 1 -guest 0 -sync 1 -history 0
+               cls
+            }
+            '/enable' {
+                Add-Policies -incognito 0 -guest 1 -sync 0 -history 1
+                cls
+            }
+            default {
+                Write-Output "Invalid argument. Use /disable or /enable."
+            }
+        }
+    } else {
+        Interactive-Menu
+    }
 }
 
 Main $command
