@@ -7,6 +7,11 @@ function Add-Policies {
         [int]$history
     )
     $Path = "HKLM:\SOFTWARE\Policies\Google\Chrome"
+
+    if (-not (Test-Path $Path)) {
+        New-Item -Path "HKLM:\SOFTWARE\Policies\Google" -Name "Chrome" -Force | Out-Null
+    }
+
     $Entries = @{
         "IncognitoModeAvailability"=$incognito
         "BrowserGuestModeEnabled"=$guest
