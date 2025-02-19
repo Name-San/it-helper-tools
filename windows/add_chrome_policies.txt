@@ -60,7 +60,7 @@ function Interactive-Menu {
                 Add-Policies -incognito 0 -guest 1 -sync 0 -history 1
             }
             'q' {
-                exit
+                $input = 0
             }
         }
     } until ($input -eq 0)
@@ -90,3 +90,4 @@ function Main {
 }
 
 Main $command
+CLS
