@@ -1,25 +1,19 @@
 # block and unblock sites
 
+param([string]$command)
+
 # blocking sites lists updated in github: https://github.com/blocklistproject/Lists
-$site_lists = [PSCustomObject]@{
-    abuse = "https://blocklistproject.github.io/Lists/abuse.txt"
-    ads = "https://blocklistproject.github.io/Lists/ads.txt"
-    crypto = "https://blocklistproject.github.io/Lists/crypto.txt"
-    drugs = "https://blocklistproject.github.io/Lists/drugs.txt"
-    fb = "https://blocklistproject.github.io/Lists/facebook.txt"
-    fraud = "https://blocklistproject.github.io/Lists/fraud.txt"
-    gambling = "https://blocklistproject.github.io/Lists/gambling.txt"
-    malware = "https://blocklistproject.github.io/Lists/malware.txt"
-    phising = "https://blocklistproject.github.io/Lists/phishing.txt"
-    piracy = "https://blocklistproject.github.io/Lists/piracy.txt"
-    porn = "https://blocklistproject.github.io/Lists/porn.txt"
-    ransomware = "https://blocklistproject.github.io/Lists/piracy.txt"
-    redirect = "https://blocklistproject.github.io/Lists/redirect.txt"
-    scam = "https://blocklistproject.github.io/Lists/scam.txt"
-    tiktok = "https://blocklistproject.github.io/Lists/tiktok.txt"
-    torrent = "https://blocklistproject.github.io/Lists/torrent.txt"
-    tracking = "https://blocklistproject.github.io/Lists/tracking.txt"
-}
+$site_lists = "
+127.0.0.1 facebook.com
+127.0.0.1 x.com
+127.0.0.1 reddit.com
+127.0.0.1 youtube.com
+127.0.0.1 music.youtube.com
+127.0.0.1 spotify.com 
+127.0.0.1 music.apple.com
+127.0.0.1 tiktok.com
+127.0.0.1 chromewebstore.google.com
+"
 
 function block {
     $isExist=(test-path "C:\Windows\System32\drivers\etc\hosts_backup")
@@ -27,57 +21,83 @@ function block {
     # creates backup
     if(-not($isExist)) {
         cp -force "C:\windows\System32\drivers\etc\hosts" "C:\windows\System32\drivers\etc\hosts_backup"
-    } 
-
-    # implement clean blocking
-    if($isExist) {
-        cp -force "C:\windows\System32\drivers\etc\hosts_backup" "C:\windows\System32\drivers\etc\hosts"
     }
 
     # iterate the object
-    foreach ($property in $site_lists.PSObject.Properties) {
-        # get the content in the given link
-        $response = irm -Uri $property.Value
-        # append the content in the hosts file
-        ac -path C:\Windows\System32\drivers\etc\hosts -value "$response"
-    }
-
-    return $true
+    ac -path C:\Windows\System32\drivers\etc\hosts -value $site_lists
 }
 
 function unblock {
     $isExist=(test-path "C:\Windows\System32\drivers\etc\hosts_backup")
 
     if(-not($isExist)) {
-        return $false
+        New-Item -Name hosts -ItemType File
+    } else {
+        cp -force "C:\windows\System32\drivers\etc\hosts_backup" "C:\windows\System32\drivers\etc\hosts"
     }
-
-    cp -force "C:\windows\System32\drivers\etc\hosts_backup" "C:\windows\System32\drivers\etc\hosts"
 }
 
 
-do {
-    cls         
-    echo "                __________________________________________________________________________________________`n
-                                           Blocking and Unblocking Sites                                `n
-                     [1] - Block                                                                        `n
-                     [2] - Unblock                                                                      `n
-                     [0] - Exit                                                                         `n
-                __________________________________________________________________________________________`n"
+function Interactive-Menu {
+    param([Object[]]$inputs)
+    do {
+        cls         
+        echo "                __________________________________________________________________________________________`n
+                                               Blocking and Unblocking Sites                                `n
+                         [1] - Block                                                                        `n
+                         [2] - Unblock                                                                      `n
+                         [q] - Exit                                                                         `n
+                    __________________________________________________________________________________________`n"
+    
+        if (-not($inputs)) { 
+            $inputs = @()
+            $inputs += read-host "                Enter selection" 
+        }
+        
+        foreach ($input in $inputs) {
+            switch($input) {
+                '1' {
+                    cls
+                    echo "Please wait..."
+                    block        
+                    echo "Successfullty blocked."
+                    $inputs = $inputs -ne $input
+                    sleep 3
+                }
+                '2' {
+                    cls
+                    echo "Please wait..."
+                    unblock       
+                    echo "Successfullty unblocked."
+                    $inputs = $inputs -ne $input
+                    sleep 3
+                } 'q' {
+                    $input = 0
+                }
+            }
+        }
+    } until ($input -eq 0)
+}
 
-    $input = read-host "                Enter selection number"
-    switch($input) {
-        '1' {
-            cls
-            echo "Please wait..."
-            block        
-            echo "Successfullty blocked."
+function Main {
+    param([string]$command)
+
+    if ($command) {
+        switch ($command) {
+            '/disable' {
+                Interactive-Menu @("1", "q")
+            } 
+            '/enable' {
+                Interactive-Menu @("2", "q")
+            }
+            default {
+                Write-Ouput "Invalid command. Use /disable or /enable"
+            }
         }
-        '2' {
-            cls
-            echo "Please wait..."
-            block        
-            echo "Successfullty unblocked."
-        }
+    } else {
+        Interactive-Menu
     }
-} until ($input -eq 0)
+}
+
+Main $command
+CLS
