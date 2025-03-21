@@ -10,6 +10,7 @@ _Simple tools to assist your daily tasks. Please read the instruction below how 
 | --- | --- | --- |
 | Add Chrome Policies| ``` irm https://name-san.github.io/it-helper-tools/windows/add_chrome_policies.txt \| iex ``` | [Link](https://name-san.github.io/it-helper-tools/windows/add_chrome_policies.txt) |
 | Block Edge | ``` irm https://name-san.github.io/it-helper-tools/windows/block_edge.txt \| iex ``` | [Link](https://name-san.github.io/it-helper-tools/windows/block_edge.txt) |
+| Block Sites | ``` irm https://name-san.github.io/it-helper-tools/windows/block_sites.txt \| iex ``` | [Link](https://name-san.github.io/it-helper-tools/windows/block_sites.txt) |
 | Disable Store | ``` irm https://name-san.github.io/it-helper-tools/windows/disable_store.txt \| iex ``` | [Link](https://name-san.github.io/it-helper-tools/windows/disable_store.txt) |
 | Set IP | ``` irm https://name-san.github.io/it-helper-tools/windows/set_ip.txt \| iex ``` | [Link](https://name-san.github.io/it-helper-tools/windows/set_ip.txt) |
 <br/>
