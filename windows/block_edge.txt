@@ -24,13 +24,13 @@ function Interactive-Menu {
                     # Create a new outbound firewall rule to block the program
                     New-NetFirewallRule -DisplayName "Block MSEdge" -Direction Outbound -Program $programPath -Action Block
                     echo "`n                Successfully blocked."
-		            $inputs = $inputs -ne $input
+		    $inputs = $inputs -ne $input
                     sleep 3
                 } '2' {
                     # Remove the firewall rule
                     Remove-NetFirewallRule -DisplayName $ruleName
                     echo "`n                Enabled successfully."
-		            $inputs = $inputs -ne $input
+		    $inputs = $inputs -ne $input
                     sleep 3
                 } 'q' {
                     $input = 0
@@ -60,3 +60,4 @@ if($command) {
 }
 
 Main $command
+CLS
