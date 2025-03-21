@@ -4,14 +4,14 @@ param([string]$command)
 
 # blocking sites lists updated in github: https://github.com/blocklistproject/Lists
 $site_lists = "
-127.0.0.1 facebook.com
+127.0.0.1 www.facebook.com
 127.0.0.1 x.com
-127.0.0.1 reddit.com
-127.0.0.1 youtube.com
+127.0.0.1 www.reddit.com
+127.0.0.1 www.youtube.com
 127.0.0.1 music.youtube.com
 127.0.0.1 spotify.com 
 127.0.0.1 music.apple.com
-127.0.0.1 tiktok.com
+127.0.0.1 www.tiktok.com
 127.0.0.1 chromewebstore.google.com
 "
 
