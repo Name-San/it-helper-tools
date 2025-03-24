@@ -16,25 +16,12 @@ $site_lists = "
 "
 
 function block {
-    $isExist=(test-path "C:\Windows\System32\drivers\etc\hosts_backup")
-
-    # creates backup
-    if(-not($isExist)) {
-        cp -force "C:\windows\System32\drivers\etc\hosts" "C:\windows\System32\drivers\etc\hosts_backup"
-    }
-
-    # iterate the object
+    New-Item -Path C:\Windows\System32\drivers\etc -Name hosts -ItemType File -Force
     ac -path C:\Windows\System32\drivers\etc\hosts -value $site_lists
 }
 
 function unblock {
-    $isExist=(test-path "C:\Windows\System32\drivers\etc\hosts_backup")
-
-    if(-not($isExist)) {
-        New-Item -Name hosts -ItemType File
-    } else {
-        cp -force "C:\windows\System32\drivers\etc\hosts_backup" "C:\windows\System32\drivers\etc\hosts"
-    }
+    New-Item -Path C:\Windows\System32\drivers\etc -Name hosts -ItemType File -Force
 }
 
 
