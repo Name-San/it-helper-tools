@@ -9,7 +9,7 @@ $site_lists = "
 127.0.0.1 www.reddit.com
 127.0.0.1 www.youtube.com
 127.0.0.1 music.youtube.com
-127.0.0.1 spotify.com 
+127.0.0.1 open.spotify.com 
 127.0.0.1 music.apple.com
 127.0.0.1 www.tiktok.com
 127.0.0.1 chromewebstore.google.com
